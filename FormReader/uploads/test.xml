@@ -1,0 +1,11 @@
+<UserList>
+  <users>
+	<name>Blobby</name>
+	<container>Yes</container>
+  </users>
+  <users>
+	<name>Smiddy</name>
+	<container>No</container>
+	<useless>True</useless>
+  </users>
+</UserList>
