@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<h1>Form Return Page</h1>
+<p th:text="${messaged}"></p>
+<p>If you aren't automatically redirected in 5 seconds, here's a button</p>
+<button onclick="history.back()">Go Back</button>
+<script>
+	const myTimeout = setTimeout(returnal, 5000);
+	function returnal(){
+		window.history.back();
+	}
+</script>
+</body>
+</html>

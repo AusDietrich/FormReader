@@ -1,5 +1,8 @@
 package com.dietrich.formReader.entity;
 
+import lombok.ToString;
+
+@ToString
 public class Greeting {
 
 	 private long id;

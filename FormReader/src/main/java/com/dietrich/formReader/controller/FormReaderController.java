@@ -39,26 +39,19 @@ public class FormReaderController {
 	@GetMapping(value = "/")
 	public String HomePage(@ModelAttribute Greeting greeting, Model model) {
 		model.addAttribute("greeting", greeting);
-
-//		ModelAndView mv = new ModelAndView();
-//		mv.
 		return "upload";
 	}
 
 	@PostMapping(value = "/")
 	public String Home(@ModelAttribute Greeting greeting, Model model) {
-		model.addAttribute("greeting", greeting);
-
-		System.out.println(greeting.getContent());
-//		ModelAndView mv = new ModelAndView();
-//		mv.
+		model.addAttribute("greetings", greeting.toString());
 		return "upload";
 	}
 
 	@Autowired
 	FileStorage storageService;
 
-	@PostMapping("/upload")
+	@PostMapping("/uploadFile")
 	public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file) {
 		String message = "";
 		try {
@@ -71,7 +64,21 @@ public class FormReaderController {
 			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
 		}
 	}
+	@PostMapping("/upload")
+	public String uploadFileWeb(@RequestParam("file") MultipartFile file, Model model) {
+		String message = "";
+		try {
+			storageService.save(file);
 
+			message = "Uploaded the file successfully: " + file.getOriginalFilename();
+			model.addAttribute("messaged", message);
+			return "recieved";
+		} catch (Exception e) {
+			message = "Could not upload the file: " + file.getOriginalFilename() + ". Error: " + e.getMessage();
+			model.addAttribute("messaged", message);
+			return "recieved";
+		}
+	}
 	@GetMapping("/files")
 	public ResponseEntity<List<FileInfo>> getListFiles() {
 		List<FileInfo> fileInfos = storageService.loadAll().map(path -> {
